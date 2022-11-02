@@ -28,9 +28,8 @@ while (Finished == false)
         Turn = true;
     }
     PrintBoard(board);
+    CheckRow(board, symbol);
 }
-PrintBoard(board);
-
 
 static void PrintBoard(string[,] b)
 {
@@ -52,3 +51,11 @@ static void UpdateBoard(string[,] b, int row, int col, string symbol)
     b[row, col] = symbol;
 }
 
+static bool CheckRow(string[,] b, string symbol)
+{
+    if (b[0,0] == "x" && b[1,0] == "x" && b[2,0] == "x" || b[0, 0] == "0" && b[1, 0] == "0" && b[2, 0] == "0")
+    {
+        Console.WriteLine("You Won!");
+    }
+    return true;
+}
