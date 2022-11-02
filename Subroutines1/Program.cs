@@ -2,13 +2,14 @@
                     {"_","_","_"},
                     {"_","_","_"} };
 
-bool Finished = false;
 bool Turn = true;
 string symbol = "a";
+char Finished = CheckRow(board, symbol);
+char Finished1 = CheckDiag(board, symbol);
 PrintBoard(board);
 
 
-while (Finished == false)
+while (Finished != 'y' && Finished1 != 'y')
 {
     Console.WriteLine();
     Console.WriteLine("Enter your row:");
@@ -19,17 +20,21 @@ while (Finished == false)
     {
         symbol = "x";
         UpdateBoard(board, row, col, symbol);
-        CheckRow(board, symbol);
         Turn = false;
     }
     else if (Turn == false)
     {
         symbol = "0";
         UpdateBoard(board, row, col, symbol);
-        CheckRow(board, symbol);
+        
         Turn = true;
     }
+    Console.Clear();
     PrintBoard(board);
+    CheckRow(board, symbol);
+    CheckDiag(board, symbol);
+    CheckColumn(board, symbol);
+
 }
 PrintBoard(board);
 
@@ -54,18 +59,142 @@ static void UpdateBoard(string[,] b, int row, int col, string symbol)
     b[row, col] = symbol;
 }
 
-static void CheckRow(string[,] b, string symbol)
+static char CheckRow(string[,] b, string symbol)
 {
+    char complete = 'n';
     if (b[0,0] == "x" && b[0,1] == "x" && b[0,2] == "x")
 	{
-        Console.WriteLine("Player X wins");
-	}
-    else if (b[0,0] == "y" && b[1,0] == "y" && b[2,0] == "y")
+        Console.WriteLine("Player X wins!");
+        Console.ReadLine();
+    }
+    else if (b[0,0] == "0" && b[0,1] == "0" && b[0,2] == "0")
 	{
         Console.WriteLine("Player 0 wins");
-	}
+        Console.ReadLine();
+    }
     else
 	{
         Console.Write("");
 	}
+
+    if (b[1, 0] == "x" && b[1, 1] == "x" && b[1, 2] == "x")
+    {
+        Console.WriteLine("Player X wins!");
+        Console.ReadLine();
+    }
+    else if (b[1, 0] == "0" && b[1, 1] == "0" && b[1, 2] == "0")
+    {
+        Console.WriteLine("Player 0 wins");
+        Console.ReadLine();
+    }
+    else
+    {
+        Console.Write("");
+    }
+
+    if (b[2, 0] == "x" && b[2, 1] == "x" && b[2, 2] == "x")
+    {
+        Console.WriteLine("Player X wins!");
+        Console.ReadLine();
+    }
+    else if (b[2, 0] == "0" && b[2, 1] == "0" && b[2, 2] == "0")
+    {
+        Console.WriteLine("Player 0 wins");
+        Console.ReadLine();
+    }
+    else
+    {
+        Console.Write("");
+    }
+
+    return complete;
+}
+
+static char CheckDiag(string[,] b, string symbol)
+{
+    char complete = 'n';
+    if (b[0, 0] == "x" && b[1, 1] == "x" && b[2, 2] == "x")
+    {
+        Console.WriteLine("Player X wins!");
+        Console.ReadLine();
+    }
+    else if (b[0, 0] == "0" && b[1, 1] == "0" && b[2, 2] == "0")
+    {
+        Console.WriteLine("Player 0 wins");
+        Console.ReadLine();
+    }
+    else
+    {
+        Console.Write("");
+    }
+
+    if (b[2, 0] == "x" && b[1, 1] == "x" && b[0, 2] == "x")
+    {
+        Console.WriteLine("Player X wins!");
+        Console.ReadLine();
+    }
+    else if (b[2, 0] == "0" && b[1, 1] == "0" && b[0, 2] == "0")
+    {
+        Console.WriteLine("Player 0 wins");
+        Console.ReadLine();
+    }
+    else
+    {
+        Console.Write("");
+    }
+
+    if (b[2, 2] == "x" && b[1, 1] == "x" && b[0, 0] == "x")
+    {
+        Console.WriteLine("Player X wins!");
+        Console.ReadLine();
+    }
+    else if (b[2, 0] == "0" && b[1, 1] == "0" && b[0, 2] == "0")
+    {
+        Console.WriteLine("Player 0 wins");
+        Console.ReadLine();
+    }
+    else
+    {
+        Console.Write("");
+    }
+
+    return complete;
+
+}
+
+static char CheckColumn(string[,] b, string symbol)
+{
+    char complete = 'n';
+    if (b[0, 0] == "x" && b[1, 0] == "x" && b[2, 0] == "x")
+    {
+        Console.WriteLine("Player X wins!");
+        Console.ReadLine();
+    }
+    else if (b[0, 0] == "0" && b[1, 0] == "0" && b[2, 0] == "0")
+    {
+        Console.WriteLine("Player 0 wins");
+        Console.ReadLine();
+    }
+    else
+    {
+        Console.Write("");
+    }
+
+    if (b[0, 1] == "x" && b[1, 1] == "x" && b[2, 1] == "x")
+    {
+        Console.WriteLine("Player X wins!");
+        Console.ReadLine();
+    }
+    else if (b[0, 2] == "0" && b[1, 2] == "0" && b[2, 2] == "0")
+    {
+        Console.WriteLine("Player 0 wins");
+        Console.ReadLine();
+    }
+    else
+    {
+        Console.Write("");
+    }
+
+    return complete;
+
 }
