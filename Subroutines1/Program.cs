@@ -1,8 +1,9 @@
-﻿string[,] board = { {"_","_","_"},
-                    {"_","_","_"},
-                    {"_","_","_"} };
+﻿string[,] board = { {"-","-","-"},
+                    {"-","-","-"},
+                    {"-","-","-"} };
 
 bool Turn = true;
+bool gamerunning = true;
 string symbol = "a";
 char Finished = CheckRow(board, symbol);
 char Finished1 = CheckDiag(board, symbol);
@@ -19,15 +20,48 @@ while (Finished != 'y' && Finished1 != 'y')
     if (Turn == true)
     {
         symbol = "x";
-        UpdateBoard(board, row, col, symbol);
-        Turn = false;
+        bool okaygame = UpdateBoard(board, row, col, symbol);
+        while (Turn == true)
+        {
+            if (okaygame == true)
+            {
+                Turn = false;
+            }
+            else if (okaygame == false)
+            {
+                Turn = true;
+                Console.WriteLine();
+                Console.WriteLine("Enter your row:");
+                row = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine("Enter your Column:");
+                col = Convert.ToInt32(Console.ReadLine());
+                symbol = "x";
+                okaygame = UpdateBoard(board, row, col, symbol);
+            }
+        }
     }
     else if (Turn == false)
     {
         symbol = "0";
-        UpdateBoard(board, row, col, symbol);
-        
-        Turn = true;
+        bool okaygame = UpdateBoard(board, row, col, symbol);
+        while (Turn == false)
+        {
+            if (okaygame == true)
+            {
+                Turn = true;
+            }
+            else
+            {
+                Turn = false;
+                Console.WriteLine();
+                Console.WriteLine("Enter your row:");
+                row = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine("Enter your Column:");
+                col = Convert.ToInt32(Console.ReadLine());
+                symbol = "0";
+                okaygame = UpdateBoard(board, row, col, symbol);
+            }
+        }
     }
     Console.Clear();
     PrintBoard(board);
@@ -54,9 +88,29 @@ static void PrintBoard(string[,] b)
     }
 }
 
-static void UpdateBoard(string[,] b, int row, int col, string symbol)
+static bool UpdateBoard(string[,] b, int row, int col, string symbol)
 {
-    b[row, col] = symbol;
+    bool okaygame = true;
+    if (b[row, col] == "x")
+    {
+        Console.Clear();
+        PrintBoard(b);
+        Console.WriteLine("Please play a slot that is not taken.");
+        okaygame = false;
+        
+    }
+    else if (b[row, col] == "0")
+    {
+        Console.Clear();
+        PrintBoard(b);
+        Console.WriteLine("Please play a slot that is not taken.");
+        okaygame = false;
+    }
+    else
+    {
+        b[row, col] = symbol;
+    }
+    return okaygame;
 }
 
 static char CheckRow(string[,] b, string symbol)
